@@ -23,7 +23,7 @@ const server = http.createServer((req, res) => {
         // ========================================
         // Create a /api/time endpoint that returns current date/time as JSON
         // Uncomment and complete the code below:
-        
+
         /*
         if (req.url === '/api/time' && req.method === 'GET') {
             const currentDateTime = new Date().toISOString();
@@ -42,25 +42,33 @@ const server = http.createServer((req, res) => {
         // ========================================
         // Map URLs to HTML files in the public folder
         // Complete the if-else chain below:
-        
+
         let filePath;
         if (req.url === '/') {
             // Home page
             filePath = path.join(PUBLIC_DIR, 'index.html');
-        } 
+        }
         // TODO: Add 'else if' for '/about' -> 'about.html'
+
+        else if (req.url === '/about') {
+            // About page
+            filePath = path.join(PUBLIC_DIR, 'about.html');
+        }
         // Example: else if (req.url === '/about') { filePath = path.join(PUBLIC_DIR, 'about.html'); }
-        
-        
+
         // TODO: Add 'else if' for '/contact' -> 'contact.html'
-        
-        
+        else if (req.url === '/contact') {
+            // Contact page
+            filePath = path.join(PUBLIC_DIR, 'contact.html');
+        }
+
+
         // ========================================
         // TODO: Task 4 - Serve CSS Files
         // ========================================
         // Handle requests for CSS files from /styles/ folder
         // Uncomment and complete the security check:
-        
+
         /*
         else if (req.url.startsWith('/styles/')) {
             filePath = path.join(PUBLIC_DIR, req.url);
@@ -85,10 +93,10 @@ const server = http.createServer((req, res) => {
         // ========================================
         // Read the file and send it to the client
         // Complete the code below:
-        
+
         // Step 1: Get the file extension (e.g., '.html', '.css')
         const extname = path.extname(filePath);
-        
+
         // Step 2: Get the content type from MIME_TYPES object
         const contentType = MIME_TYPES[extname] || 'text/html';
 
@@ -106,7 +114,7 @@ const server = http.createServer((req, res) => {
                 // TODO: Send success response
                 // Use res.writeHead() to set status code 200 and Content-Type header
                 // Use res.end() to send the file content
-                
+
                 // res.writeHead(200, { 'Content-Type': ??? });
                 // res.end(???, 'utf-8');
             }
@@ -127,12 +135,12 @@ const server = http.createServer((req, res) => {
 function handle404(res) {
     // Step 1: Create the path to 404.html
     const notFoundPath = path.join(PUBLIC_DIR, '404.html');
-    
+
     // Step 2: Try to read and serve the 404.html file
     // TODO: Use fs.readFile() to read notFoundPath
     // If successful: Send 404 status with the HTML content
     // If failed: Send 404 status with plain text "404 - Page Not Found"
-    
+
     // Example structure:
     /*
     fs.readFile(notFoundPath, (err, content) => {
@@ -151,16 +159,16 @@ function handle404(res) {
 function handleServerError(res, error) {
     // Step 1: Log the error to the console
     // TODO: Use console.error() to log the error
-    
-    
+
+
     // Step 2: Create the path to 500.html
     const serverErrorPath = path.join(PUBLIC_DIR, '500.html');
-    
+
     // Step 3: Try to read and serve the 500.html file
     // TODO: Similar to handle404, read serverErrorPath and serve it
     // If successful: Send 500 status with the HTML content
     // If failed: Send 500 status with plain text "500 - Internal Server Error"
-    
+
 }
 
 
@@ -170,14 +178,16 @@ function handleServerError(res, error) {
 // Start listening for requests on PORT 3000
 server.listen(PORT, () => {
     // TODO: Log a message to indicate the server is running
+    console.log(`My server is running on http://localhost:${PORT}`);
     // Example: console.log(`Server is running on http://localhost:${PORT}`);
-    
-    
+
+
     // Bonus: You can also log the available routes for better user experience
-    /*
+
     console.log('Available routes:');
     console.log('  GET /              -> index.html');
     console.log('  GET /about         -> about.html');
     console.log('  GET /contact       -> contact.html');
-    */
+    console.log('  GET /404           -> 404.html');
+    console.log('  GET /500           -> 500.html');
 });
