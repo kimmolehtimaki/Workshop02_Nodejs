@@ -24,17 +24,16 @@ const server = http.createServer((req, res) => {
         // Create a /api/time endpoint that returns current date/time as JSON
         // Uncomment and complete the code below:
 
-        /*
+
         if (req.url === '/api/time' && req.method === 'GET') {
-            const currentDateTime = new Date().toISOString();
+            const currentDateTime = new Date().toLocaleString('fi-FI');
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ 
-                datetime: currentDateTime,
-                timestamp: Date.now()
+            res.end(JSON.stringify({
+                datetime: currentDateTime
             }));
             return;
         }
-        */
+
 
 
         // ========================================
