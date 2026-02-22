@@ -54,12 +54,16 @@ const server = http.createServer((req, res) => {
             // About page
             filePath = path.join(PUBLIC_DIR, 'about.html');
         }
-        // Example: else if (req.url === '/about') { filePath = path.join(PUBLIC_DIR, 'about.html'); }
 
         // TODO: Add 'else if' for '/contact' -> 'contact.html'
         else if (req.url === '/contact') {
             // Contact page
             filePath = path.join(PUBLIC_DIR, 'contact.html');
+        }
+
+        // Testing reading 500-file directly for server-error
+        else if (req.url === "/500") {
+            return handleServerError(res, new Error("Testi 500"));
         }
 
 
@@ -85,7 +89,6 @@ const server = http.createServer((req, res) => {
             handle404(res);
             return;
         }
-
 
         // ========================================
         // TODO: Task 3 - Serve Files
@@ -140,25 +143,26 @@ function handle404(res) {
     // If successful: Send 404 status with the HTML content
     // If failed: Send 404 status with plain text "404 - Page Not Found"
 
-    // Example structure:
-    /*
     fs.readFile(notFoundPath, (err, content) => {
         if (err) {
+            // Failed to read the file -> plain text
             res.writeHead(404, { 'Content-Type': 'text/plain' });
             res.end('404 - Page Not Found');
-        } else {
+        }
+        else {
+            // Success -> 404 html file
             res.writeHead(404, { 'Content-Type': 'text/html' });
             res.end(content, 'utf-8');
         }
     });
-    */
+
 }
 
 // Function to handle 500 errors (Server Error)
 function handleServerError(res, error) {
     // Step 1: Log the error to the console
     // TODO: Use console.error() to log the error
-
+    console.error(error);
 
     // Step 2: Create the path to 500.html
     const serverErrorPath = path.join(PUBLIC_DIR, '500.html');
@@ -167,6 +171,18 @@ function handleServerError(res, error) {
     // TODO: Similar to handle404, read serverErrorPath and serve it
     // If successful: Send 500 status with the HTML content
     // If failed: Send 500 status with plain text "500 - Internal Server Error"
+    fs.readFile(serverErrorPath, (err, content) => {
+        if (err) {
+            // Failed to read the file -> plain text
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('500 - Internal Server Error');
+        }
+        else {
+            // Success -> 500 html file
+            res.writeHead(500, { 'Content-Type': 'text/html' });
+            res.end(content, 'utf-8');
+        }
+    });
 
 }
 
