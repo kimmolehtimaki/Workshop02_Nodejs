@@ -203,6 +203,5 @@ server.listen(PORT, () => {
     console.log('  GET /              -> index.html');
     console.log('  GET /about         -> about.html');
     console.log('  GET /contact       -> contact.html');
-    console.log('  GET /404           -> 404.html');
-    console.log('  GET /500           -> 500.html');
+    console.log('  GET /500 testing   -> 500.html');
 });

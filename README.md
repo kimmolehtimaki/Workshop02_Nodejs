@@ -1,231 +1,117 @@
-# Workshop 02 – Building a Node.js HTTP Server
+# Workshop 02 - Node.js HTTP Server with Routing
 
-## Overview
-In this workshop, you will learn the fundamentals of **Node.js HTTP server** and **routing** by building a simple web server from scratch without using any frameworks.
+This project is part of the study unit "Full Stack web development" at Laurea University of Applied Sciences. Project demonstrates a simple Node.js HTTP server with routing capabilities.
 
-This workshop focuses on **practical understanding** of how web servers work at a fundamental level.
+## Features and completed tasks
 
----
+✅ **Task 1**: HTTP server running on port 3000  
+✅ **Task 2**: Routing implementation mapping requests to HTML files  
+✅ **Task 3**: HTML pages served (index, about, contact)  
+✅ **Task 4**: CSS files served from /styles directory  
+✅ **Task 5**: Error handling (404 for unknown paths)    
 
-## Learning Objectives
-By the end of this workshop, you should be able to:
-- Create an HTTP server using Node.js built-in `http` module
-- Implement routing to serve different HTML pages
-- Serve static files (HTML, CSS) with correct MIME types
-- Handle 404 (Not Found) and 500 (Server Error) responses
-- Understand the basics of HTTP request/response cycle
-
----
-
-## Topics Covered
-- Node.js `http` module
-- File system operations with `fs` module
-- Path handling with `path` module
-- HTTP status codes and headers
-- MIME types for different file extensions
-- Basic routing and error handling
-- (Bonus) Creating JSON API endpoints
+## Testing my implementation
+- [X] Server starts without errors
+- [X] Home page loads at `http://localhost:3000`
+- [X] About page loads at `/about`
+- [X] Contact page loads at `/contact`
+- [X] CSS styles are applied correctly
+- [X] Custom 404 page appears for invalid URLs
+  - testing plain/text 404 mesage by renaming 404.html file
+- [X] Testing handleServerError function by:
+  - calling route 500 directly
+- [-] (Bonus) `/api/time` returns JSON with current time
 
 ---
+## Project Structure
 
-## Prerequisites
-Before starting this workshop, make sure you have:
-- Basic knowledge of JavaScript
-- Understanding of HTML and CSS
-- Installed:
-  - Node.js (LTS version recommended)
-  - npm (comes with Node.js)
-  - Git
-  - A code editor (VS Code recommended)
-
----
-
-## Project Description
-You will build:
-> **A simple HTTP web server that serves multiple HTML pages, CSS files, and handles custom error pages**
-
-The server will:
-- Serve a homepage, about page, and contact page
-- Load CSS stylesheets for proper styling
-- Display custom 404 and 500 error pages
-- (Bonus) Provide a JSON API endpoint for current date/time
-
----
-
-## Getting Started
-
-### 1️⃣ Clone the repository
-```bash
-git clone https://github.com/Laurea-FullStack-2026/Workshop02_Nodejs.git
-cd Workshop02_Nodejs
+```
+starter/
+├── server.js                 # Main server file
+├── package.json             # Project configuration
+├── public/                  # Public directory for static files
+│   ├── index.html          # Home page
+│   ├── about.html          # About page
+│   ├── contact.html        # Contact page
+│   └── styles/
+│       └── style.css       # Stylesheet
+└── .gitignore              # Git ignore file
 ```
 
-### 2️⃣ Navigate to the starter folder
+## Installation
+
+No external dependencies required! This project uses only Node.js core modules.
+
 ```bash
 cd starter
 ```
 
-### 3️⃣ Install dependencies
+## Running the Server
+
 ```bash
-npm install
-```
-*Note: This project uses only Node.js core modules, so no external dependencies are needed.*
-
-### 4️⃣ Start working on the tasks
-Open `server.js` and follow the TODO comments to complete each task.
-
----
-
-## Project Structure
-
-```
-Workshop02_Nodejs/
-├── starter/              # Your working directory
-│   ├── server.js        # Main server file (complete the TODOs here)
-│   ├── package.json     # Project configuration
-│   ├── public/          # Static files directory
-│   │   ├── index.html   # Home page
-│   │   ├── about.html   # About page
-│   │   ├── contact.html # Contact page
-│   │   ├── 404.html     # Custom 404 error page
-│   │   ├── 500.html     # Custom 500 error page
-│   │   └── styles/
-│   │       └── style.css # Stylesheet
-│   └── README.md
-│
-├── Solution/            # Complete solution (for reference only)
-│   └── server.js        # Fully implemented server
-│
-├── requirement.md       # Detailed task requirements
-└── README.md           # This file
+npm start
 ```
 
----
+Or directly:
 
-## Tasks Overview
+```bash
+node server.js
+```
 
-Complete the following tasks in order:
+The server will start on `http://localhost:3000`
 
-### ✅ Task 1 – Start the Server
-- Implement `server.listen()` to start the server on port 3000
-- Log a message when the server starts
+## Available Routes
 
-### ✅ Task 2 – Add Routing
-- Map URL paths to HTML files:
-  - `/` → `index.html`
-  - `/about` → `about.html`
-  - `/contact` → `contact.html`
+- `GET /` → Home page (index.html)
+- `GET /about` → About page (about.html)
+- `GET /contact` → Contact page (contact.html)
+- `GET /styles/style.css` → CSS stylesheet
+- Any unknown path → 404 error page
+- `GET /500` → Routing created to test reading 500.html file and throwing server error
 
-### ✅ Task 3 – Serve HTML Files
-- Read files using `fs.readFile()`
-- Send appropriate HTTP response with correct status codes and headers
+## Testing the Server
 
-### ✅ Task 4 – Serve CSS Files
-- Handle requests for CSS files from `/styles/` folder
-- Implement path traversal security check
+Once the server is running, you can test it:
 
-### ✅ Task 5 – Error Handling
-- Implement `handle404()` function for 404 errors
-- Implement `handleServerError()` function for 500 errors
-
-### 🌟 Task 6 (Bonus) – Create API Endpoint
-- Create `/api/time` endpoint that returns current date/time as JSON
-
----
-
-## Running Your Server
-
-1. Make sure you're in the `starter` directory
-2. Run the server:
+1. **Open in browser**: Navigate to `http://localhost:3000`
+2. **Test API endpoint**: Visit `http://localhost:3000/api/time` or use curl:
    ```bash
-   node server.js
+   curl http://localhost:3000/api/time
    ```
-3. Open your browser and visit:
-   - `http://localhost:3000` - Home page
-   - `http://localhost:3000/about` - About page
-   - `http://localhost:3000/contact` - Contact page
-   - `http://localhost:3000/nonexistent` - Test 404 error
-   - `http://localhost:3000/api/time` - Test API endpoint (bonus)
+3. **Test 404 handling**: Visit any non-existent route like `http://localhost:3000/unknown`
 
-4. Stop the server: Press `Ctrl + C` in the terminal
+## Implementation Details
 
----
+### Routing Logic
+The server maps incoming requests to appropriate files:
+- Root path (`/`) serves `index.html`
+- `/about` serves `about.html`
+- `/contact` serves `contact.html`
+- `/styles/*` serves CSS files from the styles directory
+- Unknown paths return a 404 error page
 
-## Testing Your Implementation
+### Error Handling
+- **404 Not Found**: Custom HTML page for missing resources
+- **500 Server Error**: Handled for unexpected server errors
+- All errors are logged to console for debugging
 
-### Manual Testing Checklist
-- [ ] Server starts without errors
-- [ ] Home page loads at `http://localhost:3000`
-- [ ] About page loads at `/about`
-- [ ] Contact page loads at `/contact`
-- [ ] CSS styles are applied correctly
-- [ ] Custom 404 page appears for invalid URLs
-- [ ] (Bonus) `/api/time` returns JSON with current time
+### Bonus Feature
+The `/api/time` endpoint returns current date/time in JSON:
+```json
+{
+  "datetime": "2026-01-21T13:00:00.000Z",
+  "timestamp": 1769000000000
+}
+```
 
----
+## Technologies Used
 
-## Common Issues & Troubleshooting
+- Node.js (core modules only)
+  - `http` - HTTP server
+  - `fs` - File system operations
+  - `path` - Path handling
 
-### Port Already in Use
-**Error:** `EADDRINUSE: address already in use`
-**Solution:** 
-- Stop any other server running on port 3000
-- Or change the PORT constant in `server.js`
+## License
+Copyright © 2026 Jari Kovis, Laurea Fullstack 2026
 
-### CSS Not Loading
-**Problem:** HTML loads but no styling appears
-**Check:**
-- The CSS file path in HTML matches the server route
-- MIME type for CSS is set correctly
-- Path traversal security check allows the CSS file
-
-### 404/500 Pages Not Showing
-**Check:**
-- `handle404()` and `handleServerError()` are properly implemented
-- HTML files exist in the `public` folder
-
----
-
-## Learning Resources
-
-- [Node.js HTTP Module Documentation](https://nodejs.org/api/http.html)
-- [Node.js File System Documentation](https://nodejs.org/api/fs.html)
-- [HTTP Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
-- [MIME Types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)
-
----
-
-## Submission
-
-After completing all tasks:
-1. Test your server thoroughly
-2. Commit your changes:
-   ```bash
-   git add .
-   git commit -m "Complete Workshop 02 - HTTP Server"
-   git push origin main
-   ```
-3. Verify your repository on GitHub
-
----
-
-## Need Help?
-
-- Review the comments in `server.js` for detailed hints
-- Check the `Solution` folder for reference (try to solve it yourself first!)
-- Refer to `requirement.md` for detailed task specifications
-- Ask your instructor or teaching assistant
-
----
-
-## Next Steps
-
-After completing this workshop, you'll be ready to:
-- Learn about Express.js framework (which simplifies routing)
-- Explore middleware concepts
-- Build REST APIs
-- Add database integration
-
----
-
-**Good luck and happy coding! 🚀**
+ISC
